@@ -49,3 +49,50 @@ body {
 *::-webkit-scrollbar-track {
   background-color: transparent; /* Color del track */
 }
+
+.gradient {
+  width: 1000px;
+  height: 1000px;
+  background: conic-gradient(
+    from 180deg,
+    blue,
+    #0cfdc6,
+    green
+  );
+}
+
+.gradientFilter {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.gradientContainer {
+  filter: blur(100px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.gradient {
+  animation: rotate 10s infinite linear;
+}

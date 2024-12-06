@@ -1,8 +1,10 @@
 'use client'
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export function LoginPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,6 +35,7 @@ export function LoginPage() {
       return
     }
     toast.success("Se ha iniciado sesión correctamente!")
+    router.push('/chat')
   };
   return (
     <section className="flex items-center justify-center w-full h-full rounded-3xl bg-custom-tertiary-color border-[1px] border-custom-border-color">

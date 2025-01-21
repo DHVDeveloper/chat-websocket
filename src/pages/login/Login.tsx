@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -70,9 +71,9 @@ export function LoginPage() {
           <button onClick={(e) => handleSubmit(e)} className="bg-[#0cfdc6] mb-2 font-bold w-full rounded-lg py-3 shadow-md shadow-[#5ed6ba33] text-black">
             INICIAR SESIÓN
           </button>
-          <p className="text-custom-resalt-color text-sm tracking-widest cursor-pointer">
+          <Link href={'/register'} className="text-custom-resalt-color text-sm tracking-widest cursor-pointer">
             ¿No tienes cuenta? Regístrate!
-          </p>
+          </Link>
         </section>
       </form>
     </section>

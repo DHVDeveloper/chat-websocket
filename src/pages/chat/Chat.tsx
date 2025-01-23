@@ -11,12 +11,13 @@ import { useEffect, useState } from "react";
 import { RoomButton } from "./components/rooms/RoomButton";
 import { UserSection } from "@/components/side-section/UserSection";
 import { JoinRoomModal } from "./components/rooms/JoinRoomModal";
+import { RoomList } from "./components/rooms/RoomList";
 
 type MessageType = "received" | "sended";
 interface Message {
   type: MessageType;
-  messageText: string;
-  sender: string
+  message: string;
+  from: string
 }
 
 export function ChatPage() {
@@ -30,18 +31,27 @@ export function ChatPage() {
 
   const receiveMessages = () => {
     if (!socketProvided?.socket) return;
-    socketProvided?.socket.on("server-message", (e) => {
+    socketProvided?.socket.on("newMessage", (e) => {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { type: "received", messageText: e.message,  sender: e.sender},
+        { type: "received", message: e.message,  from: e.sender},
       ]);
     });
   };
-  const sendMessage = (textToSend: string) => {
-    socketProvided?.socket.emit("mensaje", {message: textToSend, sender:user.username});
+  const sendMessage = async (textToSend: string) => {
+    const createMessage = await fetch("api/message", {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ from:user.username, roomCode:"BC5QVX", content:textToSend}),
+    })
+    if(!createMessage) return
+    socketProvided?.socket.emit("sendMessage",{ from:user.username, roomCode:"BC5QVX", content:textToSend});
     setMessages((prevMessages) => [
       ...prevMessages,
-      { type: "sended", messageText: textToSend,  sender: user.username},
+      { type: "sended", message: textToSend,  from: user.username},
     ]);
   };
 
@@ -60,19 +70,22 @@ export function ChatPage() {
   return (
     <section className="flex gap-2 w-full h-full">
       <SideSection>
-        <RoomButton showCreateRoomModal={showCreateRoomModal} />
+        <div className="flex flex-1 flex-col gap-2 overflow-hidden">
+          <RoomButton showCreateRoomModal={showCreateRoomModal} />
+          <RoomList/>
+        </div>
         <UserSection />
       </SideSection>
       <div className="flex flex-col gap-2 h-full w-full">
         <ChatBodySection>
           {messages.length > 0 &&
             messages.map((message, iter) =>
-              message.type === "received" && message.sender !== user.username ? (
-                <ReceivedMessage key={iter} lastMessageSent={handleLastMessage(iter)}>
-                  {message.messageText}
-                </ReceivedMessage>
+              message.type === "received" && message.from !== user.username ? (
+                  <ReceivedMessage senderName={message.from} key={iter} lastMessageSent={handleLastMessage(iter)}>
+                    {message.message}
+                  </ReceivedMessage>
               ) : (
-                  <SendedMessage key={iter} lastMessageSent={handleLastMessage(iter)} >{message.messageText}</SendedMessage>
+                  <SendedMessage key={iter} lastMessageSent={handleLastMessage(iter)} >{message.message}</SendedMessage>
 
               )
             )}

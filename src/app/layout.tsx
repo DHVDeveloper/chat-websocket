@@ -5,7 +5,7 @@ import { MainSection } from "@/components/MainSection";
 import { SocketProvider } from "@/context/socket/Socket.provider";
 import { Toaster } from "sonner";
 import { UserProvider } from "@/context/user/User.provider";
-import { SideSection } from "@/components/side-section/SideSection";
+import { SideSection } from "@/pages/chat/sections/side/SideSection";
 
 const inter = Titillium_Web({
   weight: "400",

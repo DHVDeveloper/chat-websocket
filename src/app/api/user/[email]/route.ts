@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import User from '@/models/User';
 import { connectMongo } from '@/utils/connectMongo';
 
-export const GET = async ({ params }: { params: { email: string } }) => {
+export const GET = async (_:Request,{ params }: { params: { email: string } }) => {
   try {
     await connectMongo();
     const user = await User.findOne({ email: params.email }).populate('chatRooms');

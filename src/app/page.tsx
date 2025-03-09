@@ -19,14 +19,14 @@ export default function Home() {
 
       <div className="flex gap-4 text-lg">
       <button
-        onClick={() => router.push("/chat")}
+        onClick={() => router.push("/register")}
         type="button"
         className={` px-4 py-2 rounded-xl flex gap-2 items-center font-bold text-custom-tertiary-color bg-custom-resalt-color`}
       >
         Registrarme
       </button>
       <button
-        onClick={() => router.push("/chat")}
+        onClick={() => router.push("/login")}
         onMouseEnter={() => setIsActiveAnimation(true)}
         onMouseLeave={() => setIsActiveAnimation(false)}
         type="button"

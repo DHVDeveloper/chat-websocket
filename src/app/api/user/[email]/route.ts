@@ -5,7 +5,7 @@ import { connectMongo } from '@/utils/connectMongo';
 export const GET = async (request: Request, { params }: { params: { email: string } }) => {
   try {
     await connectMongo();
-    const user = await User.findOne({ email: params.email });
+    const user = await User.findOne({ email: params.email }).populate('chatRooms');
     if (!user) {
       return new NextResponse(JSON.stringify({ error: 'No se ha encontrado el usuario.' }), { status: 204 });
     }

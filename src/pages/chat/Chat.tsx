@@ -31,7 +31,7 @@ export function ChatPage() {
     receiveMessages();
     socketProvided && socketProvided.socket.emit("joinRoom", "BC5QVX");
   }, []);
-
+  console.log(messages);
   const receiveMessages = () => {
     if (!socketProvided?.socket) return;
     socketProvided.socket.on("newMessage", ({ message, sender, senderSocketId }) => {
@@ -40,7 +40,7 @@ export function ChatPage() {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          type: isOwnMessage ? "sended" : "received", // Tipo del mensaje
+          type: isOwnMessage ? "sended" : "received",
           message,
           from: sender,
         },
@@ -54,10 +54,10 @@ export function ChatPage() {
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ from:user.username, roomCode:"BC5QVX", content:textToSend}),
+      body: JSON.stringify({ from:user.username, roomCode:selectedRoom, content:textToSend}),
     })
     if(!createMessage) return
-    socketProvided?.socket.emit("sendMessage",{ from:user.username, roomCode:"BC5QVX", content:textToSend});
+    socketProvided?.socket.emit("sendMessage",{ from:user.username, roomCode:selectedRoom, content:textToSend});
   };
 
   const handleLastMessage = (pos:number) => {

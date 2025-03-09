@@ -9,7 +9,7 @@ export function UserSection(){
            <div className="flex items-center gap-2">
             <RiUser6Line size={20}/>{user.username}
            </div> 
-           <span className="transition-all bg-[#474747] p-1 rounded-md cursor-pointer hover:bg-red-400 hover:text-black">
+           <span className="transition-all bg-[#ffffff10] p-1 rounded-md cursor-pointer hover:bg-red-400 hover:text-black">
             <LiaSignOutAltSolid size={23} />
            </span>
         </section>

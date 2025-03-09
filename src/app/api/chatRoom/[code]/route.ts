@@ -4,7 +4,7 @@ import { connectMongo } from '@/utils/connectMongo';
 import Message from '@/models/Message';
 import User from '@/models/User';
 
-export const GET = async ({ params }: { params: { code: string } }) => {
+export const GET = async (_: Request, { params }: { params: { code: string } }) => {
   const code = params.code
   if (!code) {
     return new NextResponse(JSON.stringify({ error: 'El código de sala es obligatorio' }), { status: 400 });

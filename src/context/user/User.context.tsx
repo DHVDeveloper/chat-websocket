@@ -6,6 +6,7 @@ import { createContext, useContext } from "react";
 
 interface UserContext{
     user:User
+    isLoading: boolean
 }
 
 export const UserContext = createContext<UserContext|undefined>(undefined)

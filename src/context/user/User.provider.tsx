@@ -1,22 +1,22 @@
 "use client";
+import { User } from "@/domain/interfaces/user/user";
 import { apiUser } from "@/services/user/apiUser";
 import { mapUserResponseToUser } from "@/services/user/mapper";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserContext } from "./User.context";
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User>({} as User);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
       try {
         (async () => {
-            if(Object.entries(user).length === 0){
-              const userFinded = await getUser()
-              setUser(userFinded)
-            }
+            setIsLoading(true)
+            const userFinded = await getUser()
+            setUser(userFinded)
+            setIsLoading(false)
         })()
       } catch (error) {
       }
@@ -28,7 +28,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{user}}>
+    <UserContext.Provider value={{user,isLoading}}>
       {children}
     </UserContext.Provider>
   );

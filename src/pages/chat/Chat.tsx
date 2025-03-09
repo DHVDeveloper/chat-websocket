@@ -13,19 +13,18 @@ import { UserSection } from "@/components/side-section/UserSection";
 import { JoinRoomModal } from "./components/rooms/JoinRoomModal";
 import { RoomList } from "./components/rooms/RoomList";
 import { NewRoomModal } from "./components/rooms/NewRoomModal";
+import { roomService } from "@/services/room/roomService";
+import { MessageView } from "@/domain/interfaces/message/message";
+import { mapMessageResponseToMessageView } from "@/domain/mappers/message.mapper";
 
-type MessageType = "received" | "sended";
-interface Message {
-  type: MessageType;
-  message: string;
-  from: string
-}
+
+
 
 export function ChatPage() {
   const socketProvided = useSocketContext();
   const { user } = useUserContext()
   const [selectedRoom, setSelectedRoom] = useState("")
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageView[]>([]);
   const [showNewRoom, setShowNewRoom] = useState<boolean>(false)
   const [showJoinRoom, setShowJoinRoom] = useState<boolean>(false)
   useEffect(() => {
@@ -69,8 +68,11 @@ export function ChatPage() {
     return true
   }
 
-  const handleSelectChat = (roomCodeSelected:string) => {
+  const handleSelectChat = async (roomCodeSelected:string) => {
     setSelectedRoom(roomCodeSelected)
+    const chatRoomData = await roomService.getRoomData(roomCodeSelected)
+    if(!chatRoomData) return
+    setMessages(mapMessageResponseToMessageView(chatRoomData.messages, user))
   }
 
   const showCreateRoomModal = (show:boolean) => {

@@ -1,15 +1,15 @@
-import { Schema } from "mongoose";
-new Schema({
+import { model, models, Schema } from "mongoose";
+const messageSchema = new Schema({
     message: {
         type: String,
-        require: true
+        required: true
     },
-    from: {
-        type: Schema.Types.ObjectId,
-        require: true
-    },
-    to: {
-        type: Schema.Types.ObjectId,
-        require: true
-    },
+    from: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    to: [{ type: Schema.Types.ObjectId, ref: 'ChatRoom' }],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    }
 })
+
+export default models.Message || model('Message', messageSchema);

@@ -8,24 +8,25 @@ interface JoinModalProps {
 }
 
 export function JoinRoomModal({ isOpen, handleIsOpenModal }: JoinModalProps) {
-  const [newRoomName, setNewRoomName] = useState("");
+  const [roomCode, setRoomCode] = useState("");
+  const {user: {email}} = useUserContext()
 
-  const createNewRoom = async () => {
-    const createRoom = await roomService.create(newRoomName);
-    console.log(createRoom);
+  const joinRoom = async () => {
+    const jorinRoomResponse = await roomService.join(roomCode,email);
+    console.log(jorinRoomResponse);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="bg-custom-main-color rounded-lg shadow-lg max-w-md w-full p-6">
-        <h2 className="text-xl font-semibold text-white">Crear sala</h2>
+        <h2 className="text-xl font-semibold text-white">Unirme a sala</h2>
 
         <p>
           <input
             type="text"
             name="username"
-            onChange={(e) => setNewRoomName(e.target.value)}
-            placeholder="Nombre de la sala"
+            onChange={(e) => setRoomCode(e.target.value)}
+            placeholder="Código de la sala"
             className="bg-[#27272A80] w-full py-3 ps-2 rounded-lg"
             required
           />
@@ -38,7 +39,7 @@ export function JoinRoomModal({ isOpen, handleIsOpenModal }: JoinModalProps) {
             Cerrar
           </button>
           <button
-            onClick={createNewRoom}
+            onClick={joinRoom}
             className="px-4 py-2 text-sm text-custom-main-color bg-custom-resalt-color rounded-md hover:bg-blue-600 transition-all"
           >
             Confirmar

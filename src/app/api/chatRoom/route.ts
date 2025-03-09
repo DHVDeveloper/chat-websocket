@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
+// Crear una sala
 export const POST = async (request: Request) => {
   if (!request.body) {
     return new NextResponse(
@@ -16,12 +17,14 @@ export const POST = async (request: Request) => {
     const body = await request.json();
     const { name } = body;
     await connectMongo();
+
     if (!name) {
       return new NextResponse(
-        JSON.stringify({ error: `El nombre se la sala es obligatorio` }),
+        JSON.stringify({ error: `El nombre de la sala es obligatorio` }),
         { status: 400 }
       );
     }
+
     const cookieStore = cookies();
     const token = cookieStore.get("authToken")?.value;
     if (!token) {
@@ -33,6 +36,7 @@ export const POST = async (request: Request) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
     };
+
     const user = await User.findById(decoded.userId);
 
     if (!user) {
@@ -41,6 +45,7 @@ export const POST = async (request: Request) => {
         { status: 404 }
       );
     }
+
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
 
     const newRoom = await ChatRoom.create({
@@ -49,6 +54,12 @@ export const POST = async (request: Request) => {
       users: [user._id],
       owner: user._id,
     });
+
+    await User.findByIdAndUpdate(
+      user._id,
+      { $addToSet: { chatRooms: newRoom._id } }, 
+      { new: true }
+    );
 
     return new NextResponse(JSON.stringify(newRoom), { status: 201 });
   } catch (error) {
@@ -60,6 +71,7 @@ export const POST = async (request: Request) => {
   }
 };
 
+// Unirse a una sala
 export const PATCH = async (request: Request) => {
   if (!request.body) {
     return new NextResponse(

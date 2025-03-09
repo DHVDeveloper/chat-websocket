@@ -3,7 +3,7 @@ import { Schema, model, models } from 'mongoose';
 const chatRoomSchema = new Schema({
   name: {
     type: String,
-    require: true
+    required: true
   },
   code: {
     type: String,

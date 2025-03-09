@@ -1,8 +1,8 @@
+import { Message } from "@/domain/interfaces/message/message";
 import { User } from "@/domain/interfaces/user/user";
-import { Message } from "postcss";
 
 export interface ChatRoomResponse{
-    cname: string;
+    name: string;
     code: string;
     users: User[];
     createdAt: string;

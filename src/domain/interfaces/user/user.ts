@@ -4,7 +4,7 @@ export interface User {
     username: string;
     email: string;
     online: boolean;
-    chatRooms: Pick<ChatRoom, "messages" | "code" | "cname">[];
+    chatRooms: Pick<ChatRoom, "messages" | "code" | "name">[];
 }
 
 

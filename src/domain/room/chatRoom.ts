@@ -1,4 +1,4 @@
-import { Message } from "../message/message";
+import { Message } from "../../message/message";
 import { User } from "../user/user";
 
 export interface ChatRoom {

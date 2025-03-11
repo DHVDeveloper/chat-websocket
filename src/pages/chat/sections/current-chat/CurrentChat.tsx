@@ -1,6 +1,5 @@
 import { useUserContext } from "@/context/user/User.context";
-import { MessageView } from "@/domain/interfaces/message/message";
-import { ChatRoom } from "@/domain/interfaces/room/chatRoom";
+import { MessageView } from "@/domain/message/message";
 import { useEffect, useState } from "react";
 import { ChatBodySection } from "./chat/ChatBodySection";
 import { InputSection } from "./chat/components/InputSection";

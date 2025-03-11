@@ -1,6 +1,6 @@
-import { useUserContext } from "@/context/user/User.context";
-import { roomService } from "@/services/room/roomService";
-import { FormEvent, useState } from "react";
+import { chatRoomService } from "@/services/chatRoomService";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface NewRoomModalProps {
   isOpen: boolean;
@@ -11,7 +11,12 @@ export function NewRoomModal({ isOpen, handleIsOpenModal }: NewRoomModalProps) {
   const [newRoomName, setNewRoomName] = useState("");
 
   const createNewRoom = async () => {
-    const createRoom = await roomService.create(newRoomName);
+    const createRoom = await chatRoomService.create(newRoomName);
+    if(!createRoom.success) {
+      return toast.error(createRoom.error)
+    }
+    handleIsOpenModal(false)
+    toast.success("Se ha creado la sala correctamente!")
   };
 
   return (

@@ -1,7 +1,7 @@
 
 
 
-import { User } from "@/domain/interfaces/user/user";
+import { User } from "@/domain/user/user";
 import { createContext, useContext } from "react";
 
 interface UserContext{

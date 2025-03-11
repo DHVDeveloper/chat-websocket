@@ -1,6 +1,7 @@
 import { useUserContext } from "@/context/user/User.context";
-import { roomService } from "@/services/room/roomService";
+import { chatRoomService } from "@/services/chatRoomService";
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -12,8 +13,12 @@ export function JoinRoomModal({ isOpen, handleIsOpenModal }: JoinModalProps) {
   const {user: {email}} = useUserContext()
 
   const joinRoom = async () => {
-    const jorinRoomResponse = await roomService.join(roomCode,email);
-    console.log(jorinRoomResponse);
+    const joinRoomResponse = await chatRoomService.join(roomCode,email);
+    if(!joinRoomResponse.success) {
+      return toast.error(joinRoomResponse.error)
+    }
+    handleIsOpenModal(false)
+    toast.success("Se ha creado la sala correctamente!")
   };
 
   return (

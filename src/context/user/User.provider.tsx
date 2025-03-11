@@ -1,8 +1,6 @@
 "use client";
-import { User } from "@/domain/interfaces/user/user";
-import { apiUser } from "@/services/user/apiUser";
-import { mapUserResponseToUser } from "@/services/user/mapper";
-import { useRouter } from "next/navigation";
+import { User } from "@/domain/user/user";
+import { userService } from "@/services/userService";
 import { useEffect, useState } from "react";
 import { UserContext } from "./User.context";
 
@@ -14,18 +12,15 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       try {
         (async () => {
             setIsLoading(true)
-            const userFinded = await getUser()
-            setUser(userFinded)
+            const userData = await userService.getUser();
+            if(!userData.success || !userData.data) return
+            setUser(userData.data)
             setIsLoading(false)
         })()
       } catch (error) {
       }
   }, []); 
 
-  const getUser = async () => {
-    const userResponse = await apiUser.getUser();
-    return mapUserResponseToUser(userResponse);
-  };
 
   return (
     <UserContext.Provider value={{user,isLoading}}>

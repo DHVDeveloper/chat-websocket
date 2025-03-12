@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
 import jwt from "jsonwebtoken";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export const POST = async (request: Request) => {
   try {
@@ -28,7 +27,7 @@ export const POST = async (request: Request) => {
       });
     }
 
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return new Response(JSON.stringify({ error: "Contraseña incorrecta." }), {
         status: 401,

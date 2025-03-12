@@ -1,12 +1,20 @@
 'use client'
+import { loginServices } from "@/services/loginService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
+
+export interface LoginFormData {
+  email: string,
+  password: string
+}
 
 export function LoginPage() {
   const router = useRouter()
-  const [formData, setFormData] = useState({
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
@@ -21,26 +29,20 @@ export function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); 
-
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const result = await res.json();
-    if(result.error){
-      toast.error(result.error)
-      return
+    if (formRef.current && !formRef.current.checkValidity()) {
+      formRef.current.reportValidity();
+      return;
+    }
+    const loginResponse = await loginServices.login(formData)
+    if(loginResponse.error){
+      return toast.error("No se ha encontrado el usuario con estas credenciales.")
     }
     toast.success("Se ha iniciado sesión correctamente!")
     router.push('/chat')
   };
   return (
     <section className="flex items-center justify-center w-full h-full rounded-3xl bg-custom-tertiary-color border-[1px] border-custom-border-color">
-      <form action="">
+      <form ref={formRef} action="">
         <section className="flex items-center justify-center flex-col">
           <h2 className="font-bold text-4xl tracking-widest">
             BIENVENIDO DE NUEVO!
@@ -68,7 +70,7 @@ export function LoginPage() {
               required
             />
           </section>
-          <button onClick={(e) => handleSubmit(e)} className="bg-[#0cfdc6] mb-2 font-bold w-full rounded-lg py-3 shadow-md shadow-[#5ed6ba33] text-black">
+          <button type="submit" onClick={(e) => handleSubmit(e)} className="bg-[#0cfdc6] mb-2 font-bold w-full rounded-lg py-3 shadow-md shadow-[#5ed6ba33] text-black">
             INICIAR SESIÓN
           </button>
           <Link href={'/register'} className="text-custom-resalt-color text-sm tracking-widest cursor-pointer">

@@ -1,5 +1,5 @@
-import { Message, MessageView } from "../interfaces/message/message";
-import { User } from "../interfaces/user/user";
+import { Message, MessageView } from "./message";
+import { User } from "../user/user";
 
 export function mapMessageResponseToMessageView(messages:Message[], client:User):MessageView[] {
     const messageView:MessageView[] = messages.map((message) => ({

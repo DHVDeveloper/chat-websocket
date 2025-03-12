@@ -1,5 +1,5 @@
-import { User } from "@/domain/interfaces/user/user"
-import { UserResponse } from "./models"
+import { User } from "@/domain/user/user"
+import { UserResponse } from "./userModels"
 
 export const mapUserResponseToUser = (userResponse:UserResponse):User => {
     return {

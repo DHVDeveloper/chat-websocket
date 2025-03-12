@@ -1,4 +1,4 @@
-import { ChatRoomResponse } from "../room/models";
+import { ChatRoomResponse } from "../room/chatRoomModel";
 
 export interface UserResponse{
     username: string,

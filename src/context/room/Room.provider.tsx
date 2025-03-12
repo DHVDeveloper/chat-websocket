@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RoomContext } from "./Room.context";
-import { roomService } from "@/services/room/roomService";
-import { ChatRoom } from "@/domain/interfaces/room/chatRoom";
+import { ChatRoom } from "@/domain/room/chatRoom";
+import { chatRoomService } from "@/services/chatRoomService";
 
 export function RoomProvider({children}:{children:React.ReactNode}){
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -10,9 +10,9 @@ export function RoomProvider({children}:{children:React.ReactNode}){
     const handleSelectRoom = async (roomCodeSelected:string) => {
         setIsLoading(true)
         try {
-            const chatRoomData = await roomService.getRoomData(roomCodeSelected)
-            if(!chatRoomData) return
-            setSelectedRoom(chatRoomData)
+            const chatRoomData = await chatRoomService.getRoomData(roomCodeSelected)
+            if(chatRoomData.error) return
+            setSelectedRoom(chatRoomData.data)
         } catch (error) {
             throw Error('')
         } finally {

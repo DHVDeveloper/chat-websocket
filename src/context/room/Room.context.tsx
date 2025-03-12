@@ -1,4 +1,4 @@
-import { ChatRoom } from "@/domain/interfaces/room/chatRoom";
+import { ChatRoom } from "@/domain/room/chatRoom";
 import { createContext, useContext } from "react";
 
 interface RoomContext{

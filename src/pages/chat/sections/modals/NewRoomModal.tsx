@@ -1,3 +1,4 @@
+import { useUserContext } from "@/context/user/User.context";
 import { chatRoomService } from "@/services/chatRoomService";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -9,6 +10,7 @@ interface NewRoomModalProps {
 
 export function NewRoomModal({ isOpen, handleIsOpenModal }: NewRoomModalProps) {
   const [newRoomName, setNewRoomName] = useState("");
+  const {reloadChatRooms} = useUserContext()
 
   const createNewRoom = async () => {
     const createRoom = await chatRoomService.create(newRoomName);
@@ -17,13 +19,13 @@ export function NewRoomModal({ isOpen, handleIsOpenModal }: NewRoomModalProps) {
     }
     handleIsOpenModal(false)
     toast.success("Se ha creado la sala correctamente!")
+    reloadChatRooms()
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="bg-custom-main-color rounded-lg shadow-lg max-w-md w-full p-6">
-        <h2 className="text-xl font-semibold text-white">Crear sala</h2>
-
+        <h2 className="text-xl font-semibold text-white pb-3">Crear sala</h2>
         <p>
           <input
             type="text"
@@ -43,7 +45,7 @@ export function NewRoomModal({ isOpen, handleIsOpenModal }: NewRoomModalProps) {
           </button>
           <button
             onClick={createNewRoom}
-            className="px-4 py-2 text-sm text-custom-main-color bg-custom-resalt-color rounded-md hover:bg-blue-600 transition-all"
+            className="px-4 py-2 text-sm bg-[#0cfdc625] text-custom-resalt-color rounded-md hover:bg-[#0cfdc655] transition-all"
           >
             Confirmar
           </button>

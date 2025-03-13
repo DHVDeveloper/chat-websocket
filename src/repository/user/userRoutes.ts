@@ -1,3 +1,4 @@
 export const userRoutes = {
-    get: () => `/api/user`
+    get: () => `/api/user`,
+    getRoomsByUser: () => `/api/chatRoom`
 };

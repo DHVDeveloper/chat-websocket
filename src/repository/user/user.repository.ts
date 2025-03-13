@@ -1,8 +1,8 @@
 // repositories/userRepository.ts
 import { ApiResponse } from '@/types/apiResponse';
-import { UserResponse } from './userModels';
+import { UserResponse } from './user.interface';
 import { apiFetch } from '@/utils/apiFetch';
-import { userRoutes } from './userRoutes';
+import { userRoutes } from './user.routes';
 
 export const userRepository = {
   getUser: async (): Promise<ApiResponse<UserResponse>> => {

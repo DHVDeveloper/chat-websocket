@@ -1,10 +1,13 @@
 'use client'
+import { authServices } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 export function RegisterPage() {
   const router = useRouter()
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,26 +23,21 @@ export function RegisterPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const result = await res.json();
-    if(result.error){
-      toast.error(result.error)
-      return
-    }
-    toast.success("Se ha registrado correctamente sesión correctamente!")
-    router.push('chat')
-  };
+      e.preventDefault(); 
+      if (formRef.current && !formRef.current.checkValidity()) {
+        formRef.current.reportValidity();
+        return;
+      }
+      const registerResponse = await authServices.register(formData)
+      if(registerResponse.error){
+        return toast.error(registerResponse.error)
+      }
+      toast.success("Se ha registrado correctamente!")
+      router.push('/chat')
+    };
   return (
     <section className="flex items-center justify-center w-full h-full rounded-3xl bg-custom-tertiary-color border-[1px] border-custom-border-color">
-      <form action="">
+      <form ref={formRef} action="">
         <section className="flex items-center justify-center flex-col">
           <h2 className="font-bold text-4xl tracking-widest">
             Crear cuenta
@@ -76,7 +74,7 @@ export function RegisterPage() {
               required
             />
           </section>
-          <button onClick={(e) => handleSubmit(e)} className="bg-[#0cfdc6] font-bold w-full rounded-lg py-3 shadow-md shadow-[#5ed6ba33] text-black">
+          <button type="submit" onClick={(e) => handleSubmit(e)} className="bg-[#0cfdc6] font-bold w-full rounded-lg py-3 shadow-md shadow-[#5ed6ba33] text-black">
             CREAR CUENTA
           </button>
         </section>

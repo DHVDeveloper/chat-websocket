@@ -7,7 +7,7 @@ export async function apiFetch<T>(url: string, options?: RequestInit): Promise<A
   
       if (!response.ok) {
         const errorData = await response.json();
-        return { success: false, error: errorData.message || ERROR_MESSAGES.UNKNOWN_ERROR };
+        return { success: false, error: errorData.error || ERROR_MESSAGES.UNKNOWN_ERROR };
       }
   
       const data = await response.json();

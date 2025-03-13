@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RoomContext } from "./Room.context";
-import { ChatRoom } from "@/domain/room/chatRoom";
-import { chatRoomService } from "@/services/chatRoomService";
+import { ChatRoom } from "@/domain/room/chatRoom.interface";
+import { chatRoomService } from "@/services/chatRoom.service";
 
 export function RoomProvider({children}:{children:React.ReactNode}){
     const [isLoading, setIsLoading] = useState<boolean>(true)

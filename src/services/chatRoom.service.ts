@@ -1,6 +1,6 @@
 import { ROOM_ERROR_MESSAGES } from "@/constants/messages";
-import { ChatRoomResponse } from "@/repository/room/chatRoomModel";
-import { chatRoomRepository } from "@/repository/room/roomRepository";
+import { ChatRoomResponse } from "@/repository/room/chatRoom.interface";
+import { chatRoomRepository } from "@/repository/room/chatRoom.repository";
 import { ApiResponse } from "@/types/apiResponse";
 
 export const chatRoomService = {

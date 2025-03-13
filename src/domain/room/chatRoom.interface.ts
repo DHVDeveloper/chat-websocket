@@ -1,5 +1,5 @@
-import { Message } from "../message/message";
-import { User } from "../user/user";
+import { Message } from "../message/message.interface";
+import { User } from "../user/user.interface";
 
 export interface ChatRoom {
     name: string;

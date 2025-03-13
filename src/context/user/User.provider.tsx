@@ -1,6 +1,6 @@
 "use client";
-import { User } from "@/domain/user/user";
-import { userService } from "@/services/userService";
+import { User } from "@/domain/user/user.interface";
+import { userService } from "@/services/user.service";
 import { useEffect, useState } from "react";
 import { UserContext } from "./User.context";
 

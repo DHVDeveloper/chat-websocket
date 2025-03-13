@@ -1,5 +1,5 @@
-import { Message } from "@/domain/message/message";
-import { User } from "@/domain/user/user";
+import { Message } from "@/domain/message/message.interface";
+import { User } from "@/domain/user/user.interface";
 
 export interface ChatRoomResponse{
     name: string;

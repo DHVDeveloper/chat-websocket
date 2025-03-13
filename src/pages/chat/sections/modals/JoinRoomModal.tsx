@@ -1,5 +1,5 @@
 import { useUserContext } from "@/context/user/User.context";
-import { chatRoomService } from "@/services/chatRoomService";
+import { chatRoomService } from "@/services/chatRoom.service";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
 

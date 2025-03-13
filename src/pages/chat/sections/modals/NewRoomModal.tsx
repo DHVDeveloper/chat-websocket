@@ -1,4 +1,4 @@
-import { chatRoomService } from "@/services/chatRoomService";
+import { chatRoomService } from "@/services/chatRoom.service";
 import { useState } from "react";
 import { toast } from "sonner";
 

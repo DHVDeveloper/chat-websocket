@@ -1,8 +1,8 @@
 import { ERROR_MESSAGES, USER_ERROR_MESSAGES } from '../constants/messages';
 import { ApiResponse } from '@/types/apiResponse';
-import { User } from '@/domain/user/user';
-import { userRepository } from '@/repository/user/userRepository';
-import { mapUserResponseToUser } from '@/repository/user/userMappers';
+import { User } from '@/domain/user/user.interface';
+import { userRepository } from '@/repository/user/user.repository';
+import { mapUserResponseToUser } from '@/repository/user/user.mapper';
 
 export const userService = {
   getUser: async (): Promise<ApiResponse<User>> => {

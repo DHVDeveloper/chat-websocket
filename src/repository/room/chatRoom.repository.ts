@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/apiResponse";
 import { apiFetch } from "@/utils/apiFetch";
-import { ChatRoomResponse } from "./chatRoomModel";
-import { chatRoomRoutes } from "./chatRoomRoutes";
+import { ChatRoomResponse } from "./chatRoom.interface";
+import { chatRoomRoutes } from "./chatRoom.routes";
 
 export const chatRoomRepository = {
   create: async (name: string): Promise<ApiResponse<ChatRoomResponse>> => {

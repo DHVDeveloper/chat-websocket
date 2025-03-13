@@ -1,14 +1,12 @@
 'use client'
-import { loginServices } from "@/services/loginService";
+import { LoginFormData } from "@/domain/auth/auth.interface";
+import { authServices } from "@/services/auth.service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-export interface LoginFormData {
-  email: string,
-  password: string
-}
+
 
 export function LoginPage() {
   const router = useRouter()
@@ -33,9 +31,9 @@ export function LoginPage() {
       formRef.current.reportValidity();
       return;
     }
-    const loginResponse = await loginServices.login(formData)
+    const loginResponse = await authServices.login(formData)
     if(loginResponse.error){
-      return toast.error("No se ha encontrado el usuario con estas credenciales.")
+      return toast.error(loginResponse.error)
     }
     toast.success("Se ha iniciado sesión correctamente!")
     router.push('/chat')

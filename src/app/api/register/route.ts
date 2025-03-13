@@ -19,13 +19,22 @@ export const POST = async (request: Request) => {
         { status: 400 }
       );
     }
+    const alreadyEmailRegister = await User.findOne({email: email})
+    const alreadyUsernameRegister = await User.findOne({username: username})
+    if(alreadyEmailRegister || alreadyUsernameRegister){
+      return new Response(
+        JSON.stringify({
+          error: `Ya existe un usuario registrado con este ${!!alreadyEmailRegister ? 'email' : 'nombre de usuario' }`,
+        }),
+        { status: 400 }
+      );
+    }
 
     const user = new User({
       username,
       email,
       password: await bcrypt.hash(password, 12),
     });
-
     await user.validate();
     await user.save();
 

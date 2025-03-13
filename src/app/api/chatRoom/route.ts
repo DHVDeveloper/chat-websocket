@@ -71,11 +71,44 @@ export const POST = async (request: Request) => {
   }
 };
 
+//salas por usuario
+export const GET = async () => {
+  await connectMongo();
+  const cookieStore = cookies();
+  const token = cookieStore.get('authToken')?.value;
+  if (!token) {
+    return new Response(
+      JSON.stringify({ error: "No autenticado" }),
+      { status: 401 }
+    );
+  }
+  
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    userId: string;
+  };
+
+  const user = await User.findById(decoded.userId).populate({
+      path: 'chatRooms',
+      select: 'name code messages -_id',
+      model: ChatRoom
+    }, );
+  if (!user) {
+    return new Response(
+      JSON.stringify({ error: "No se ha podido actualizar las salas de chat" }),
+      { status: 404 }
+    );
+  }
+
+  return NextResponse.json(
+    user.chatRooms
+  );
+}
+
 // Unirse a una sala
 export const PATCH = async (request: Request) => {
   if (!request.body) {
     return new NextResponse(
-      JSON.stringify({ error: "El nombre de la sala es obligatorio" }),
+      JSON.stringify({ error: "El código de la sala es obligatorio" }),
       { status: 500 }
     );
   }
@@ -89,7 +122,7 @@ export const PATCH = async (request: Request) => {
     if (!roomFound) {
       return new NextResponse(
         JSON.stringify({
-          error: `La sala con el código ${roomCode} no ha sido encontrada`,
+          error: `La sala no ha sido encontrada`,
         }),
         { status: 400 }
       );

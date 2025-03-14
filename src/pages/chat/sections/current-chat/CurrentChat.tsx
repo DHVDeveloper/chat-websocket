@@ -8,6 +8,7 @@ import { SendedMessage } from "./chat/components/SendedMessage";
 import { useSocketContext } from "@/context/socket/Socket.context";
 import { useRoomContext } from "@/context/room/Room.context";
 import { CurrentChatSkeleton } from "./CurrentChat.skeleton";
+import { ChatHeaderSection } from "./chat/ChatHeaderSection";
 
 export function CurrentChat(){
     const { user,isLoading } = useUserContext()
@@ -60,6 +61,7 @@ export function CurrentChat(){
     return(!isLoading ? (selectedRoom ? 
         <div className="flex flex-col gap-2 h-full w-full">
           <ChatBodySection>
+            <ChatHeaderSection currentChatRoom={selectedRoom}/>
             {messages.length > 0 &&
               messages.map((message, iter) =>
                 message.type === "received" && message.from !== user.username ? (

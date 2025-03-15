@@ -1,5 +1,5 @@
 import { useUserContext } from "@/context/user/User.context"
-import { LiaSignOutAltSolid } from "react-icons/lia"
+import { IoExitOutline } from "react-icons/io5"
 import { RiUser6Line } from "react-icons/ri"
 import { UserSectionSkeleton } from "./UserSection.skeleton"
 
@@ -12,8 +12,8 @@ export function UserSection(){
                 <div className="flex items-center gap-2">
                     <RiUser6Line size={20}/>{user.username}
                 </div> 
-                <span className="transition-all bg-[#ffffff10] p-1 rounded-md cursor-pointer hover:bg-red-400 hover:text-black">
-                    <LiaSignOutAltSolid size={23} />
+                <span className="transition-all text-[#a1a1aa] p-1 rounded-md cursor-pointer hover:bg-red-200 hover:text-red-600">
+                    <IoExitOutline size={18}  /> 
                 </span>
                 </section>
              : <UserSectionSkeleton/>

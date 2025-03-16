@@ -16,10 +16,8 @@ export const GET = async (_: Request, { params }: { params: { code: string } }) 
     const room = await ChatRoom.findOne({ code: { $in: code } }).populate({
       path: 'messages',
       model: Message,
-      populate: [
-        { path: 'from', model: User },
-        { path: 'to', model: User },
-      ],
+      populate: { path: 'from', model: User }
+      ,
     });
 
     if (!room) {

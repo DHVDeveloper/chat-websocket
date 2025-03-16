@@ -32,19 +32,18 @@ app.prepare().then(() => {
     });
     socket.on("sendMessage", async ({ from, roomCode, content }) => {
       try {
-        io.to(roomCode).emit("newMessage", {
-          message: content,
-          from,
-          senderSocketId: socket.id,
-          createdAt: content.createdAt,
-        });
+          socket.to(roomCode).emit("newMessage", {
+              message: content,
+              sender: from ,
+              senderSocketId: socket.id,
+              createdAt: new Date().toISOString(),
+          });
   
-        console.log(`Mensaje enviado en sala ${roomCode}: ${content}`);
+          console.log(`Mensaje enviado en sala ${roomCode}: ${content}`);
       } catch (err) {
-        console.error(err);
-        socket.emit("error", "Error al enviar el mensaje");
+          socket.emit("error", "Error al enviar el mensaje");
       }
-    });
+  });
   });
 
   httpServer

@@ -12,7 +12,7 @@ export const POST = async (request: Request) => {
           { status: 400, headers: { "Content-Type": "application/json" } }
         );
       }
-      const user = await User.findOne({username: from})
+      const user = await User.findOne({email: from})
       const room = await ChatRoom.findOne({code: roomCode})
       
       const newMessage = await Message.create({

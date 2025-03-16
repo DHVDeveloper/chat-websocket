@@ -4,8 +4,8 @@ const messageSchema = new Schema({
         type: String,
         required: true
     },
-    from: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    to: [{ type: Schema.Types.ObjectId, ref: 'ChatRoom' }],
+    from: { type: Schema.Types.ObjectId, ref: 'User' },
+    to: { type: Schema.Types.ObjectId, ref: 'ChatRoom' },
     createdAt: {
         type: Date,
         default: Date.now,

@@ -6,7 +6,7 @@ export interface Message {
   to: string;
   createdAt: string;
 }
-type MessageType = "received" | "sended";
+export type MessageType = "received" | "sended";
 export interface MessageView {
   type: MessageType;
   message: string;

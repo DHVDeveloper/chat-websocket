@@ -73,7 +73,7 @@ export function CurrentChat() {
 
   return !isLoading ? (
     selectedRoom ? (
-      <div className="flex flex-col gap-2 h-full w-full">
+      <div className="flex flex-col gap-2 h-full w-[65%] ">
         <ChatSection>
           <ChatHeader currentChatRoom={selectedRoom} />
           <ChatBody messages={messages} userEmail={user.email} />

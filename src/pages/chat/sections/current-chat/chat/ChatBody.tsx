@@ -29,7 +29,7 @@ const ChatBody: React.FC<ChatBodyProps> = ({ messages, userEmail }) => {
   };
 
   return (
-    <div ref={chatBodyRef} className="px-4 py-2 flex flex-col gap-2 overflow-y-auto">
+    <div ref={chatBodyRef} className="px-4 py-2 flex flex-col gap-2 w-full overflow-x-hidden overflow-y-auto">
       {messages.map((message, index) =>
         message.type === 'received' && message.from !== userEmail ? (
           <ReceivedMessage

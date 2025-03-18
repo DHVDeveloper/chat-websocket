@@ -1,4 +1,3 @@
-// repositories/userRepository.ts
 import { ApiResponse } from '@/types/apiResponse';
 import { UserResponse } from './userModels';
 import { apiFetch } from '@/utils/apiFetch';

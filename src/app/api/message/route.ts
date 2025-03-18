@@ -1,6 +1,9 @@
 import ChatRoom from "@/models/ChatRoom";
 import Message from "@/models/Message";
 import User from "@/models/User";
+import { connectMongo } from "@/utils/connectMongo";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 export const POST = async (request: Request) => {
     try {
@@ -12,7 +15,33 @@ export const POST = async (request: Request) => {
           { status: 400, headers: { "Content-Type": "application/json" } }
         );
       }
-      const user = await User.findOne({email: from})
+
+      await connectMongo();
+      const cookieStore = cookies();
+      const token = cookieStore.get('authToken')?.value;
+      if (!token) {
+        return new Response(
+          JSON.stringify({ error: "No autenticado" }),
+          { status: 401 }
+        );
+      }
+      
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+        userId: string;
+      };
+  
+      const user = await User.findById(decoded.userId).populate({
+          path: 'chatRooms',
+          select: 'name code messages -_id',
+          model: ChatRoom
+        }, );
+        
+      if (!user) {
+        return new Response(
+          JSON.stringify({ error: "Usuario no encontrado" }),
+          { status: 404 }
+        );
+      }
       const room = await ChatRoom.findOne({code: roomCode})
       
       const newMessage = await Message.create({

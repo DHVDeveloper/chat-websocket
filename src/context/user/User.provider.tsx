@@ -12,7 +12,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   
   useEffect(() => {
-    handleReloadUserData()
+    if(Object.keys(user).length === 0){
+      handleReloadUserData()
+    }
   }, []); 
 
 

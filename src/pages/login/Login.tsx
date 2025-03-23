@@ -1,4 +1,5 @@
 'use client'
+import { useUserContext } from "@/context/user/User.context";
 import { loginServices } from "@/services/loginService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ export interface LoginFormData {
 export function LoginPage() {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null);
-
+  const {handleReloadUserData} = useUserContext()
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -38,6 +39,7 @@ export function LoginPage() {
       return toast.error("No se ha encontrado el usuario con estas credenciales.")
     }
     toast.success("Se ha iniciado sesión correctamente!")
+    handleReloadUserData()
     router.push('/chat')
   };
   return (

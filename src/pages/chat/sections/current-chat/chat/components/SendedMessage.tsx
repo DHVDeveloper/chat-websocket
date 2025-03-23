@@ -1,10 +1,11 @@
 interface SendedMessage {
   lastMessageSent: boolean;
   children: React.ReactNode;
+  messageRef: React.RefObject<HTMLDivElement> | null;
 }
-export function SendedMessage({ children, lastMessageSent }: SendedMessage) {
+export function SendedMessage({ children, lastMessageSent,messageRef }: SendedMessage) {
   return (
-    <div className="text-custom-text-color max-w-[100%] flex justify-end items-center">
+    <div ref={messageRef} className="text-custom-text-color max-w-[100%] flex justify-end items-center">
       <div
         className={`border shadow-lg bg-[#278b5b] w-fit max-w-[50%] backdrop-filter overflow-hidden backdrop-blur-lg text-custom-text-color ${
           lastMessageSent ? "rounded-lg rounded-br-none" : "rounded-lg"

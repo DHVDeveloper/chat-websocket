@@ -1,6 +1,6 @@
 import { useUserContext } from "@/context/user/User.context";
 import { chatRoomService } from "@/services/chatRoomService";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 interface JoinModalProps {
@@ -11,8 +11,7 @@ interface JoinModalProps {
 export function JoinRoomModal({ isOpen, handleIsOpenModal }: JoinModalProps) {
   const [roomCode, setRoomCode] = useState("");
   const {user: {email},reloadChatRooms} = useUserContext()
-    const formRef = useRef<HTMLFormElement>(null);
-
+  const formRef = useRef<HTMLFormElement>(null);
   const joinRoom = async (e: React.FormEvent) => {
     e.preventDefault(); 
     if (formRef.current && !formRef.current.checkValidity()) {
@@ -27,6 +26,7 @@ export function JoinRoomModal({ isOpen, handleIsOpenModal }: JoinModalProps) {
     toast.success("Se ha creado la sala correctamente!")
     reloadChatRooms()
   };
+  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">

@@ -4,7 +4,7 @@ import { useUserContext } from '@/context/user/User.context';
 import { MessageView } from '@/domain/message/message';
 import { mapMessageResponseToMessageView } from '@/domain/message/message.mapper';
 import { ChatRoom } from '@/domain/room/chatRoom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CurrentChatSkeleton } from './CurrentChat.skeleton';
 import ChatBody from './chat/ChatBody';
 import { ChatHeader } from './chat/ChatHeader';
@@ -70,7 +70,7 @@ export function CurrentChat() {
       toast.error('Ha habido un problema al enviar el mensaje')
     }
   };
-
+  console.log(messages);
   return !isLoading ? (
     selectedRoom ? (
       <div className="flex flex-col gap-2 h-full w-[65%] ">

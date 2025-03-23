@@ -21,4 +21,12 @@ export const userRepository = {
 
     return response;
   },
+  logout: async (): Promise<ApiResponse<null>> => {
+    const response = await apiFetch<null>(userRoutes.logout(), {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    return response;
+  },
 };

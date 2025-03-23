@@ -8,6 +8,8 @@ interface UserContext{
     user:User
     isLoading: boolean
     reloadChatRooms: () => void
+    logout: () => void
+    handleReloadUserData: () => void
 }
 
 export const UserContext = createContext<UserContext|undefined>(undefined)

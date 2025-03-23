@@ -24,8 +24,8 @@ export const chatRoomService = {
       return { success: true, data: response.data };
     },
   
-    getRoomData: async (roomCode: string): Promise<ApiResponse<ChatRoomResponse>> => {
-      const response = await chatRoomRepository.getRoomData(roomCode);
+    getRoomData: async (roomCode: string, page:number, size:number): Promise<ApiResponse<ChatRoomResponse>> => {
+      const response = await chatRoomRepository.getRoomData(roomCode,page,size);
   
       if (!response.success) {
         return { success: false, error: response.error || ROOM_ERROR_MESSAGES.GET_ROOM_ERROR };

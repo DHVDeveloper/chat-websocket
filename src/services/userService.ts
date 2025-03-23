@@ -24,4 +24,13 @@ export const userService = {
 
     return { success: true, data: response.data  };
   },
+  logout: async (): Promise<ApiResponse<null>> => {
+    const response = await userRepository.logout();
+
+    if (!response.success) {
+      return { success: false, error: response.error || "Error al cerrar sesión" };
+    }
+
+    return { success: true, data: null };
+  },
 };

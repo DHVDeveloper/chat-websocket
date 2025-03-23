@@ -30,8 +30,8 @@ export const chatRoomRepository = {
     return response;
   },
 
-  getRoomData: async (roomCode: string): Promise<ApiResponse<ChatRoomResponse>> => {
-    const response = await apiFetch<ChatRoomResponse>(chatRoomRoutes.getRoom(roomCode), {
+  getRoomData: async (roomCode: string, page:number, size:number): Promise<ApiResponse<ChatRoomResponse>> => {
+    const response = await apiFetch<ChatRoomResponse>(chatRoomRoutes.getRoom(roomCode,page,size), {
       method: 'GET',
       credentials: 'include',
     });

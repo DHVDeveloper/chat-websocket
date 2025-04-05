@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Titillium_Web } from "next/font/google";
 import "./globals.css";
+import { MainSection } from "@/components/MainSection";
+import { SocketProvider } from "@/context/socket/Socket.provider";
+import { Toaster } from "sonner";
+import { UserProvider } from "@/context/user/User.provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Titillium_Web({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +23,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <UserProvider>
+          <SocketProvider>
+            <main className="bg-custom-main-color min-h-screen relative">
+              <div className="gradientContainer">
+                <div className="gradient"></div>
+              </div>
+              <div className="gradientFilter"></div>
+              <section className="relative z-50 w-full flex items-center justify-center h-screen bg-transparent bg-cover bg-center py-10">
+                <MainSection>{children}</MainSection>
+              </section>
+              <Toaster richColors position="bottom-right" />
+            </main>
+          </SocketProvider>
+        </UserProvider>
+      </body>
     </html>
   );
 }

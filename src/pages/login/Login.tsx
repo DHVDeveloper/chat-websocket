@@ -42,11 +42,12 @@ export function LoginPage() {
     handleReloadUserData()
     router.push('/chat')
   };
+  
   return (
     <section className="flex items-center justify-center w-full h-full rounded-3xl bg-custom-tertiary-color border-[1px] border-custom-border-color">
       <form ref={formRef} action="">
         <section className="flex items-center justify-center flex-col">
-          <h2 className="font-bold text-4xl tracking-widest">
+          <h2 className="font-bold text-2xl md:text-4xl tracking-widest">
             BIENVENIDO DE NUEVO!
           </h2>
           <p className="text-custom-text-secondary-color">

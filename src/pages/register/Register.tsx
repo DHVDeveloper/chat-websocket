@@ -42,7 +42,7 @@ export function RegisterPage() {
       <form action="">
         <section className="flex items-center justify-center flex-col">
           <h2 className="font-bold text-4xl tracking-widest">
-            Crear cuenta
+            CREAR CUENTA
           </h2>
           <p className="text-custom-text-secondary-color">
             Chatea con quien tu quieras desde donde quieras.
